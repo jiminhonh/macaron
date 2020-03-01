@@ -1,8 +1,34 @@
 service: macaron
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: true
+    packager: 'yarn'
+
+  settings:
+    MDB_USERNAME: ${ssm:jiminhonh-mongodb-username}
+    MDB_PASSWORD: ${ssm:jiminhonh-mongodb-password}
+    MDB_DATABASE: ${ssm:jiminhonh-mongodb-database}-${self:provider.stage}
+
 provider:
   name: aws
+  stage: dev
   runtime: nodejs12.x
+  websocketsApiRouteSelectionExpression: '$request.body.route'
+  region: us-east-1
+  profile: jiminhonh-admin
+  environment: ${self:custom.settings}
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
 
 functions:
-  hello:
-    handler: handler.hello
+  hello_world:
+    handler: src/helloWorld.index
+    events:
+      - http:
+          method: get
+          path: /hello_world
+          cors: true

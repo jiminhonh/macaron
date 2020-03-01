@@ -6,10 +6,10 @@ custom:
     includeModules: true
     packager: 'yarn'
 
-  settings:
-    MDB_USERNAME: ${ssm:jiminhonh-mongodb-username}
-    MDB_PASSWORD: ${ssm:jiminhonh-mongodb-password}
-    MDB_DATABASE: ${ssm:jiminhonh-mongodb-database}-${self:provider.stage}
+#  settings:
+#    MDB_USERNAME: ${ssm:jiminhonh-mongodb-username}
+#    MDB_PASSWORD: ${ssm:jiminhonh-mongodb-password}
+#    MDB_DATABASE: ${ssm:jiminhonh-mongodb-database}-${self:provider.stage}
 
 provider:
   name: aws
@@ -18,7 +18,7 @@ provider:
   websocketsApiRouteSelectionExpression: '$request.body.route'
   region: us-east-1
   profile: jiminhonh-admin
-  environment: ${self:custom.settings}
+#  environment: ${self:custom.settings}
 
 plugins:
   - serverless-offline
